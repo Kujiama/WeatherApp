@@ -150,6 +150,13 @@ button:active{
         width: 350px;
     }
     
+    .card-input{
+        width: 100%;
+    }
+
+    .card-input_wrapper button{
+        right: .8rem;
+    }
 }
 
 
