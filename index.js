@@ -1,4 +1,4 @@
-// KEY -> c967f54e2bb96b822df7e27e13d174cd <- TO BE DELETED
+'use strict';
 
 const baseURL = `https://api.openweathermap.org/data/2.5/weather`
 const searchBtn = $("button");
@@ -15,7 +15,7 @@ searchBtn.click(() =>{
             alert("Please enter a valid city");
         }else{
             // create a debounce to minimize rapid calls to the API
-            setTimeout(weather,2000);
+            setTimeout(fetchWeatherData,2000);
         }
     }catch (error){
         content.html(errorHtml(error.message,cityNotFound = false))
@@ -23,20 +23,23 @@ searchBtn.click(() =>{
 });
 
 
-async function weather(){ // since we are using an async function, await keyword must be used 
+async function fetchWeatherData(){ // since we are using an async function, await keyword must be used 
     /* 
         we fetch a promise. after the fetch returns a promise,
         we resolve the promise into a response object;
     */
+   
+    const apiKey = `YOUR_OPENWEATHER_API_KEY`;
+    let cityNotFound;
+
     try{
-        const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city.val()}&appid=c967f54e2bb96b822df7e27e13d174cd`)
+        const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city.val()}&appid=${apiKey}`)
         const weatherData = await weather.json();
         content.html(weatherHtml(weatherData));
     }catch(error){
-        let cityNotFound = true;
+        cityNotFound = true;
         content.html(errorHtml(error.message, cityNotFound));
     }
-    
 }
 
 function errorHtml(message, cityNotFound){
